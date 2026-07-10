@@ -24,8 +24,7 @@ const AdminRegister = () => {
     try{
 
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register-admin",
-        formData
+      `${import.meta.env.VITE_API_URL}/api/reservations`
       );
 
       alert(res.data.message);
