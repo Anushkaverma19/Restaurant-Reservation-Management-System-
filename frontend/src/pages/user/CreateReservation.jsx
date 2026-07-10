@@ -1,7 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import API from "../../api/axios";
 const CreateReservation = () => {
   const navigate = useNavigate();
 
@@ -73,16 +72,15 @@ const CreateReservation = () => {
       setLoading(true);
       setMessage("");
 
-      await axios.post(
-        `${API_URL}/api/reservations`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
+    await API.post(
+  "/api/reservations",
+  formData,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
 
       setMessage(
         "Reservation created successfully"
