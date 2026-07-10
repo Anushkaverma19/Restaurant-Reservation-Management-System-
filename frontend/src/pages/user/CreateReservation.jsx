@@ -1,6 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import API from "../api/axios";
 
 const CreateReservation = () => {
   const navigate = useNavigate();
@@ -25,7 +25,17 @@ const CreateReservation = () => {
     e.preventDefault();
 
     try {
-      await API.post("/reservations", formData);
+      const token = localStorage.getItem("token");
+
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/reservations`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setMessage("Reservation created successfully");
 
@@ -34,8 +44,7 @@ const CreateReservation = () => {
       }, 1000);
     } catch (error) {
       setMessage(
-        error.response?.data?.message ||
-          "Reservation failed"
+        error.response?.data?.message || "Reservation failed"
       );
     }
   };
