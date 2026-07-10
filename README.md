@@ -1,35 +1,37 @@
-# 🍽️ ReserveEase - Restaurant Reservation System
+#  ReserveEase - Restaurant Reservation System
 
-ReserveEase is a full-stack restaurant reservation management system that allows customers to book restaurant tables online and enables administrators to manage tables and reservations efficiently.
+ReserveEase is a full-stack restaurant reservation management system that allows customers to book restaurant tables online and enables administrators to efficiently manage tables and reservations.
 
-The system provides a seamless dining experience with real-time table availability, secure authentication, and an admin dashboard for restaurant management.
+The system provides a seamless dining experience with secure authentication, real-time table availability checking, reservation management, and a dedicated admin dashboard for restaurant operations.
 
 ---
 
 #  Live Demo
 
-Frontend:
+## Frontend
 
-https://your-live-frontend-link.vercel.app
-
-Backend API:
+restaurant-reservation-management-s-five.vercel.app
+## Backend API
 
 https://your-backend-link.onrender.com
 
 ---
 
-#Features
+#  Features
 
-## Customer Features
+##  Customer Features
 
 - User registration and login
 - JWT based authentication
+- Secure user session handling
 - Browse available restaurant tables
-- Check table availability
-- Create reservations
-- Select date and time slot
-- View booking details
-- Cancel reservations
+- Check table availability based on date and time
+- Create restaurant reservations
+- Select reservation date and time slot
+- Specify number of guests
+- Automatically assign available tables
+- View personal reservation history
+- Cancel existing reservations
 
 ---
 
@@ -44,13 +46,15 @@ Admin can directly login using the provided credentials.
 ## Admin Capabilities
 
 - Admin dashboard access
+- View all reservations
 - Manage restaurant tables
 - Add new restaurant tables
 - Update table capacity
 - Activate/Deactivate tables
 - Delete tables
-- View reservation information
-- Manage restaurant availability
+- Monitor restaurant availability
+- Manage table information
+- View customer booking details
 
 ---
 

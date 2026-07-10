@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 const CreateReservation = () => {
   const navigate = useNavigate();
 
+  const today = new Date().toISOString().split("T")[0];
+
   const [formData, setFormData] = useState({
     reservationDate: "",
     startTime: "",
@@ -13,22 +15,66 @@ const CreateReservation = () => {
   });
 
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "guests" ? Number(value) : value,
+    }));
   };
+
+
+  const validateForm = () => {
+    if (!formData.reservationDate) {
+      return "Please select reservation date";
+    }
+
+    if (!formData.startTime || !formData.endTime) {
+      return "Please select reservation time";
+    }
+
+    if (formData.startTime >= formData.endTime) {
+      return "End time must be after start time";
+    }
+
+    if (formData.guests < 1) {
+      return "Guests must be at least 1";
+    }
+
+    return null;
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const error = validateForm();
+
+    if (error) {
+      setMessage(error);
+      return;
+    }
+
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+
     try {
-      const token = localStorage.getItem("token");
+      setLoading(true);
+      setMessage("");
 
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/reservations`,
+        `${API_URL}/api/reservations`,
         formData,
         {
           headers: {
@@ -37,82 +83,212 @@ const CreateReservation = () => {
         }
       );
 
-      setMessage("Reservation created successfully");
+
+      setMessage(
+        "Reservation created successfully"
+      );
+
 
       setTimeout(() => {
         navigate("/my-reservations");
-      }, 1000);
+      }, 1200);
+
+
     } catch (error) {
-      setMessage(
-        error.response?.data?.message || "Reservation failed"
+
+      console.error(
+        "Reservation Error:",
+        error
       );
+
+
+      setMessage(
+        error.response?.data?.message ||
+        "Unable to create reservation"
+      );
+
+    } finally {
+      setLoading(false);
     }
   };
 
+
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+
       <form
         onSubmit={handleSubmit}
-        className="bg-slate-900 p-8 rounded-2xl w-96"
+        className="
+        w-full max-w-md
+        bg-slate-900
+        text-white
+        p-8
+        rounded-2xl
+        shadow-xl
+        "
       >
-        <h1 className="text-3xl font-bold mb-6 text-center">
+
+        <h1 className="
+        text-3xl 
+        font-bold 
+        text-center 
+        mb-6
+        ">
           Create Reservation
         </h1>
 
-        <label>Reservation Date</label>
-        <input
-          type="date"
-          name="reservationDate"
-          value={formData.reservationDate}
-          onChange={handleChange}
-          className="w-full p-3 my-3 text-black rounded"
-          required
-        />
 
-        <label>Start Time</label>
-        <input
-          type="time"
-          name="startTime"
-          value={formData.startTime}
-          onChange={handleChange}
-          className="w-full p-3 my-3 text-black rounded"
-          required
-        />
+        <div className="mb-4">
 
-        <label>End Time</label>
-        <input
-          type="time"
-          name="endTime"
-          value={formData.endTime}
-          onChange={handleChange}
-          className="w-full p-3 my-3 text-black rounded"
-          required
-        />
+          <label className="block mb-2">
+            Reservation Date
+          </label>
 
-        <label>Number of Guests</label>
-        <input
-          type="number"
-          name="guests"
-          min="1"
-          value={formData.guests}
-          onChange={handleChange}
-          className="w-full p-3 my-3 text-black rounded"
-          required
-        />
+          <input
+            type="date"
+            name="reservationDate"
+            min={today}
+            value={formData.reservationDate}
+            onChange={handleChange}
+            required
+            className="
+            w-full
+            p-3
+            rounded
+            text-black
+            "
+          />
+
+        </div>
+
+
+
+        <div className="mb-4">
+
+          <label className="block mb-2">
+            Start Time
+          </label>
+
+          <input
+            type="time"
+            name="startTime"
+            value={formData.startTime}
+            onChange={handleChange}
+            required
+            className="
+            w-full
+            p-3
+            rounded
+            text-black
+            "
+          />
+
+        </div>
+
+
+
+        <div className="mb-4">
+
+          <label className="block mb-2">
+            End Time
+          </label>
+
+          <input
+            type="time"
+            name="endTime"
+            value={formData.endTime}
+            onChange={handleChange}
+            required
+            className="
+            w-full
+            p-3
+            rounded
+            text-black
+            "
+          />
+
+        </div>
+
+
+
+        <div className="mb-4">
+
+          <label className="block mb-2">
+            Number of Guests
+          </label>
+
+
+          <input
+            type="number"
+            name="guests"
+            min="1"
+            value={formData.guests}
+            onChange={handleChange}
+            required
+            className="
+            w-full
+            p-3
+            rounded
+            text-black
+            "
+          />
+
+        </div>
+
+
 
         <button
+          disabled={loading}
           type="submit"
-          className="w-full bg-yellow-500 text-black font-bold py-3 rounded mt-4"
+          className="
+          w-full
+          bg-yellow-500
+          hover:bg-yellow-400
+          disabled:bg-gray-500
+          text-black
+          font-bold
+          py-3
+          rounded
+          transition
+          "
         >
-          Confirm Reservation
+
+          {
+            loading
+            ? "Creating..."
+            : "Confirm Reservation"
+          }
+
         </button>
 
-        {message && (
-          <p className="text-center mt-4">{message}</p>
-        )}
+
+
+        {
+          message && (
+
+            <p
+              className={`
+              text-center
+              mt-4
+              ${
+                message.includes("success")
+                ? "text-green-400"
+                : "text-red-400"
+              }
+              `}
+            >
+              {message}
+            </p>
+
+          )
+        }
+
+
       </form>
+
     </div>
   );
 };
+
 
 export default CreateReservation;
