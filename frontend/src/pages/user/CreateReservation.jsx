@@ -72,8 +72,8 @@ const CreateReservation = () => {
       setLoading(true);
       setMessage("");
 
-    await API.post(
-  "/api/reservations",
+ await API.post(
+  "/reservations",
   formData,
   {
     headers: {
