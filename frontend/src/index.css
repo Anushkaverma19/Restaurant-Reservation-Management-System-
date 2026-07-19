@@ -1,5 +1,8 @@
 @import "tailwindcss";
-
+input[type="date"],
+input[type="time"] {
+  color-scheme: dark;
+}
 
 html,
 body,

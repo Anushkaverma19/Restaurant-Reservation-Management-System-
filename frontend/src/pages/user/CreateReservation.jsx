@@ -141,21 +141,26 @@ const CreateReservation = () => {
           <label className="block mb-2">
             Reservation Date
           </label>
-
-          <input
-            type="date"
-            name="reservationDate"
-            min={today}
-            value={formData.reservationDate}
-            onChange={handleChange}
-            required
-            className="
-            w-full
-            p-3
-            rounded
-            text-black
-            "
-          />
+<input
+  type="date"
+  name="reservationDate"
+  min={today}
+  value={formData.reservationDate}
+  onChange={handleChange}
+  required
+  className="
+  w-full
+  p-3
+  rounded-lg
+  bg-slate-800
+  border
+  border-slate-600
+  text-white
+  focus:outline-none
+  focus:ring-2
+  focus:ring-yellow-500
+  "
+/>
 
         </div>
 
@@ -167,19 +172,26 @@ const CreateReservation = () => {
             Start Time
           </label>
 
-          <input
-            type="time"
-            name="startTime"
-            value={formData.startTime}
-            onChange={handleChange}
-            required
-            className="
-            w-full
-            p-3
-            rounded
-            text-black
-            "
-          />
+        <input
+  type="time"
+  name="reservationDate"
+  min={today}
+  value={formData.reservationDate}
+  onChange={handleChange}
+  required
+  className="
+  w-full
+  p-3
+  rounded-lg
+  bg-slate-800
+  border
+  border-slate-600
+  text-white
+  focus:outline-none
+  focus:ring-2
+  focus:ring-yellow-500
+  "
+/>
 
         </div>
 
@@ -191,19 +203,26 @@ const CreateReservation = () => {
             End Time
           </label>
 
-          <input
-            type="time"
-            name="endTime"
-            value={formData.endTime}
-            onChange={handleChange}
-            required
-            className="
-            w-full
-            p-3
-            rounded
-            text-black
-            "
-          />
+        <input
+  type="time"
+  name="reservationDate"
+  min={today}
+  value={formData.reservationDate}
+  onChange={handleChange}
+  required
+  className="
+  w-full
+  p-3
+  rounded-lg
+  bg-slate-800
+  border
+  border-slate-600
+  text-white
+  focus:outline-none
+  focus:ring-2
+  focus:ring-yellow-500
+  "
+/>
 
         </div>
 
@@ -216,20 +235,26 @@ const CreateReservation = () => {
           </label>
 
 
-          <input
-            type="number"
-            name="guests"
-            min="1"
-            value={formData.guests}
-            onChange={handleChange}
-            required
-            className="
-            w-full
-            p-3
-            rounded
-            text-black
-            "
-          />
+       <input
+  type="number"
+  name="reservationDate"
+  min={today}
+  value={formData.reservationDate}
+  onChange={handleChange}
+  required
+  className="
+  w-full
+  p-3
+  rounded-lg
+  bg-slate-800
+  border
+  border-slate-600
+  text-white
+  focus:outline-none
+  focus:ring-2
+  focus:ring-yellow-500
+  "
+/>
 
         </div>
 
